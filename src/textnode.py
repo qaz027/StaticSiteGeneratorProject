@@ -4,10 +4,10 @@ from htmlnode import LeafNode
 class TextType(Enum):
     TEXT = "text" #text (plain)
     BOLD = "bold" #**Bold text**
-    ITALICS = "italic" #_Italic text_
+    ITALIC = "italic" #_Italic text_
     CODE = "code" #`Code text`
-    LINKS = "link" #Links, in this format: [anchor text](url)
-    IMAGES = "images" #Images, in this format: ![alt text](url)
+    LINK = "link" #Links, in this format: [anchor text](url)
+    IMAGE = "image" #Images, in this format: ![alt text](url)
 
 class TextNode:
     def __init__(self, text, text_type, url = None):
@@ -28,14 +28,14 @@ def text_node_to_html_node(text_node):
         return LeafNode(None, value=text_node.text)
     if text_node.text_type == TextType.BOLD:
         return LeafNode(tag="b",value=text_node.text)
-    if text_node.text_type == TextType.ITALICS:
+    if text_node.text_type == TextType.ITALIC:
         return LeafNode(tag="i",value=text_node.text)
     if text_node.text_type == TextType.CODE:
         return LeafNode(tag="code",value=text_node.text)
-    if text_node.text_type == TextType.LINKS:
+    if text_node.text_type == TextType.LINK:
         return LeafNode(tag="a", value = text_node.text, props={"href":text_node.url})
-    if text_node.text_type == TextType.IMAGES:
-        return LeafNode(tag="img", None, {"src":text_node.url, "alt":text_node.text})
+    if text_node.text_type == TextType.IMAGE:
+        return LeafNode(tag="img", value = "", props={"src":text_node.url, "alt":text_node.text})
     raise ValueError(f"invalid text type: {text_node.text_type}")
 
 
