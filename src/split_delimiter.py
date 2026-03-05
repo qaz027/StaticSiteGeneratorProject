@@ -24,7 +24,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     #nodes = old_nodes.split(delimiter)
     
     for old_node in old_nodes:
-        if text_type != TextType.TEXT:
+        if old_node.text_type != TextType.TEXT:
             new_nodes.append(old_node)
             continue
 
