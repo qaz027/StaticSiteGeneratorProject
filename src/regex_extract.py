@@ -1,7 +1,9 @@
 import re
 
 def extract_markdown_images(text):
-    pass
+    matches = re.findall(r"!\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
+    return matches
 
 def extract_markdown_links(text):
-    pass
+    matches = re.findall(r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
+    return matches
