@@ -2,24 +2,6 @@ from textnode import TextNode, TextType
 from regex_extract import extract_markdown_images, extract_markdown_links
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
-    
-    '''
-    It takes a list of "old nodes", a delimiter, and a text type. 
-    It should return a new list of nodes, where any "text" type nodes in the input list are (potentially) 
-    split into multiple nodes based on the syntax. For example, given the following input:
-
-    node = TextNode("This is text with a `code block` word", TextType.TEXT)
-    new_nodes = split_nodes_delimiter([node], "`", TextType.CODE)
-
-    new_nodes becomes:
-
-    [
-        TextNode("This is text with a ", TextType.TEXT),
-        TextNode("code block", TextType.CODE),
-        TextNode(" word", TextType.TEXT),
-    ]
-    '''
-
     new_nodes = []
     # split the old_nodes by the delimiter
     #nodes = old_nodes.split(delimiter)
@@ -44,10 +26,8 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
                 nodes.append(TextNode(sections[i], text_type))
         
         new_nodes.extend(nodes)
-
-    
-    
     return new_nodes
+
 
 
 def split_nodes_image(old_nodes):
@@ -123,25 +103,41 @@ def split_nodes_link(old_nodes):
             new_nodes.append(TextNode(original_text, TextType.TEXT))
     return new_nodes
 
-def split_nodes_link(old_nodes):
-    new_nodes = []
-    for old_node in old_nodes:
-        if old_node.text_type != TextType.TEXT:
-            new_nodes.append(old_node)
-            continue
-        original_text = old_node.text
-        links = extract_markdown_links(original_text)
-        if len(links) == 0:
-            new_nodes.append(old_node)
-            continue
-        for link in links:
-            sections = original_text.split(f"[{link[0]}]({link[1]})", 1)
-            if len(sections) != 2:
-                raise ValueError("invalid markdown, link section not closed")
-            if sections[0] != "":
-                new_nodes.append(TextNode(sections[0], TextType.TEXT))
-            new_nodes.append(TextNode(link[0], TextType.LINK, link[1]))
-            original_text = sections[1]
-        if original_text != "":
-            new_nodes.append(TextNode(original_text, TextType.TEXT))
+# def split_nodes_link(old_nodes):
+#     new_nodes = []
+#     for old_node in old_nodes:
+#         if old_node.text_type != TextType.TEXT:
+#             new_nodes.append(old_node)
+#             continue
+#         original_text = old_node.text
+#         links = extract_markdown_links(original_text)
+#         if len(links) == 0:
+#             new_nodes.append(old_node)
+#             continue
+#         for link in links:
+#             sections = original_text.split(f"[{link[0]}]({link[1]})", 1)
+#             if len(sections) != 2:
+#                 raise ValueError("invalid markdown, link section not closed")
+#             if sections[0] != "":
+#                 new_nodes.append(TextNode(sections[0], TextType.TEXT))
+#             new_nodes.append(TextNode(link[0], TextType.LINK, link[1]))
+#             original_text = sections[1]
+#         if original_text != "":
+#             new_nodes.append(TextNode(original_text, TextType.TEXT))
+#     return new_nodes
+
+def text_to_textnodes(text):
+    #new_nodes = []
+    new_nodes = [TextNode(text, TextType.TEXT)]
+    #new_nodes = split_nodes_image(split_nodes_link([split_nodes_delimiter(original_node, TextType.TEXT)]))
+    print(f"splitting out bold")
+    new_nodes = split_nodes_delimiter(new_nodes,"**", TextType.BOLD)
+    new_nodes = split_nodes_delimiter(new_nodes, "_", TextType.ITALIC)
+    new_nodes = split_nodes_delimiter(new_nodes, "`", TextType.CODE)
+
+    #new_nodes = split_nodes_image(split_nodes_link(new_nodes))
+    new_nodes = split_nodes_image(new_nodes)
+    new_nodes = split_nodes_link(new_nodes)
     return new_nodes
+    
+
