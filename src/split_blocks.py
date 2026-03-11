@@ -1,4 +1,12 @@
+from enum import Enum
 
+class BlockType(Enum):
+    PARAGRAPH: "paragraph"
+    HEADING: "heading"
+    CODE: "code"
+    QUOTE: "quote"
+    UNORDERED_LIST: "unordered list"
+    ORDERED_LIST: "ordered_list"
 
 def markdown_to_blocks(markdown):
     blocks = []
@@ -14,3 +22,6 @@ def markdown_to_blocks(markdown):
         blocks.append(block)
     
     return blocks
+
+def block_to_blockType(blocks):
+    pass
