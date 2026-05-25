@@ -1,5 +1,12 @@
 import unittest
-from markdown_blocks import (
+# from markdown_blocks import (
+#     markdown_to_html_node,
+#     markdown_to_blocks,
+#     block_to_block_type,
+#     BlockType,
+# )
+
+from split_blocks import (
     markdown_to_html_node,
     markdown_to_blocks,
     block_to_block_type,
@@ -59,9 +66,9 @@ This is the same paragraph on a new line
         block = "> quote\n> more quote"
         self.assertEqual(block_to_block_type(block), BlockType.QUOTE)
         block = "- list\n- items"
-        self.assertEqual(block_to_block_type(block), BlockType.ULIST)
+        self.assertEqual(block_to_block_type(block), BlockType.UNORDERED_LIST)
         block = "1. list\n2. items"
-        self.assertEqual(block_to_block_type(block), BlockType.OLIST)
+        self.assertEqual(block_to_block_type(block), BlockType.ORDERED_LIST)
         block = "paragraph"
         self.assertEqual(block_to_block_type(block), BlockType.PARAGRAPH)
 
