@@ -1,5 +1,6 @@
 import os
-from markdown_blocks import markdown_to_html_node
+#from markdown_blocks import markdown_to_html_node
+from split_blocks import markdown_to_html_node
 
 
 def generate_page(from_path: str, template_path: str, dest_path: str) -> None:
