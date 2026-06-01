@@ -33,3 +33,7 @@ def extract_title(md: str) -> str:
         if line.startswith("# "):
             return line[2:]
     raise ValueError("no title found")
+
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    pass
