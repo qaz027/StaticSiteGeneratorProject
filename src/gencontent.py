@@ -36,4 +36,9 @@ def extract_title(md: str) -> str:
 
 
 def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
-    pass
+    print(f" * {dir_path_content} {template_path} -> {dest_dir_path}")
+    if not os.path.exists(dest_dir_path):
+        os.mkdir(dest_dir_path)
+    from_file = open(dir_path_content, "r")
+    markdown_content = from_file.read()
+    from_file.close()
