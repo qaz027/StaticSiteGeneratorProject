@@ -1,5 +1,6 @@
 import os
 import shutil
+import sys
 
 from copystatic import copy_files_recursive
 from textnode import *
@@ -22,6 +23,11 @@ dir_path_static = "./static"
 dir_path_public = "./public"
 dir_path_content = "./content"
 template_path = "./template.html"
+if sys.argv[0]:
+    basepath = sys.argv[0]
+else:
+    basepath = "/"
+
 
 
 def main():
